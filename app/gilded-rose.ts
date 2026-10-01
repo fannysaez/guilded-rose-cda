@@ -68,21 +68,16 @@ export class GildedRose {
             this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
           ) {
             // objet normal périmé : quality baisse encore de 1 (donc -2 au total ce jour-là)
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-                this.items[i].quality = this.items[i].quality - 1;
-              }
+            if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
+              this.decreaseQuality(this.items[i]);
             }
           } else {
             // Backstage passes périmé : le concert est passé, quality tombe à 0
-            this.items[i].quality =
-              this.items[i].quality - this.items[i].quality;
+            this.items[i].quality = 0;
           }
         } else {
           // Aged Brie périmé : continue d'augmenter encore de 1 (donc +2 au total ce jour-là)
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1;
-          }
+          this.increaseQuality(this.items[i]);
         }
       }
     }
