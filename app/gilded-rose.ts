@@ -17,13 +17,15 @@ export class GildedRose {
     this.items = items;
   }
 
-  private increaseQuality(item: Item): void { // augmente la quality de 1, sans jamais dépasser 50
+  private increaseQuality(item: Item): void {
+    // augmente la quality de 1, sans jamais dépasser 50
     if (item.quality < 50) {
       item.quality = item.quality + 1;
     }
   }
 
-  private decreaseQuality(item: Item): void { // diminue la quality de 1, sans jamais descendre sous 0
+  private decreaseQuality(item: Item): void {
+    // diminue la quality de 1, sans jamais descendre sous 0
     if (item.quality > 0) {
       item.quality = item.quality - 1;
     }
@@ -35,10 +37,8 @@ export class GildedRose {
         this.items[i].name != "Aged Brie" &&
         this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
       ) {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-            this.items[i].quality = this.items[i].quality - 1;
-          }
+        if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
+          this.decreaseQuality(this.items[i]);
         }
       } else {
         if (this.items[i].quality < 50) {
