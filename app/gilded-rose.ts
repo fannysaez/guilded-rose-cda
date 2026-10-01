@@ -66,6 +66,10 @@ export class GildedRose {
           this.decreaseQuality(item);
           this.decreaseQuality(item); // 2x plus vite qu'un objet normal
           item.sellIn = item.sellIn - 1;
+          if (item.sellIn < 0) {
+            this.decreaseQuality(item);
+            this.decreaseQuality(item); // 2x plus vite aussi une fois périmé
+          }
           break;
 
         default:
