@@ -8,8 +8,16 @@ export class Item {
     this.sellIn = sellIn;
     this.quality = quality;
   }
+}
 
-    private increaseQuality(item: Item): void { // augmente la quality de 1, sans jamais dépasser 50
+export class GildedRose {
+  items: Array<Item>;
+
+  constructor(items = [] as Array<Item>) {
+    this.items = items;
+  }
+
+  private increaseQuality(item: Item): void { // augmente la quality de 1, sans jamais dépasser 50
     if (item.quality < 50) {
       item.quality = item.quality + 1;
     }
@@ -19,14 +27,6 @@ export class Item {
     if (item.quality > 0) {
       item.quality = item.quality - 1;
     }
-  }
-}
-
-export class GildedRose {
-  items: Array<Item>;
-
-  constructor(items = [] as Array<Item>) {
-    this.items = items;
   }
 
   updateQuality() {
