@@ -105,3 +105,13 @@ describe("dégradation après la date de péremption (sellIn < 0)", () => {
     expect(items[0].quality).toBe(0); // la quality chute à 0
   });
 });
+
+describe('Conjured Mana Cake', () => {
+  it('perd 2 de quality par jour (au lieu de 1 pour un objet normal)', () => {
+    const gildedRose = new GildedRose([new Item('Conjured Mana Cake', 3, 6)]); // sellIn=3, quality=6
+    const items = gildedRose.updateQuality(); // simule 1 jour
+
+    expect(items[0].sellIn).toBe(2); // sellIn baisse normalement
+    expect(items[0].quality).toBe(4); // quality baisse de 2 (et non 1)
+  });
+});
