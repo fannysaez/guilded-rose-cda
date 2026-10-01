@@ -29,3 +29,17 @@
     });
 
   });
+
+    describe('Sulfuras', () => { // tests sur l'objet légendaire, immuable
+
+    it('ne change jamais (ni quality, ni sellIn)', () => {
+      const gildedRose = new GildedRose([
+        new Item('Sulfuras, Hand of Ragnaros', 10, 80), // objet légendaire
+      ]);
+      const items = gildedRose.updateQuality(); // simule 1 jour
+
+      expect(items[0].sellIn).toBe(10); // sellIn inchangé
+      expect(items[0].quality).toBe(80); // quality inchangée
+    });
+
+  });
