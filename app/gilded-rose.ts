@@ -33,58 +33,42 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      const item = this.items[i]; // raccourci : évite de répéter this.items[i] partout
+      const item = this.items[i];
 
-      // évolution de la quality selon le type d'objet
       switch (item.name) {
         case "Aged Brie":
           this.increaseQuality(item);
+          item.sellIn = item.sellIn - 1;
+          if (item.sellIn < 0) {
+            this.increaseQuality(item); // périmé : augmente encore
+          }
           break;
 
         case "Backstage passes to a TAFKAL80ETC concert":
           this.increaseQuality(item); // +1 de base
           if (item.sellIn < 11) {
-            this.increaseQuality(item); // +1 de plus si ≤10 jours (donc +2 au total)
+            this.increaseQuality(item); // +1 si ≤10 jours
           }
           if (item.sellIn < 6) {
-            this.increaseQuality(item); // +1 de plus si ≤5 jours (donc +3 au total)
+            this.increaseQuality(item); // +1 si ≤5 jours
+          }
+          item.sellIn = item.sellIn - 1;
+          if (item.sellIn < 0) {
+            item.quality = 0; // concert passé
           }
           break;
 
         case "Sulfuras, Hand of Ragnaros":
-          // ne change jamais
+          // ne change jamais, sellIn ne bouge pas non plus
           break;
 
         default:
           // objet normal
           this.decreaseQuality(item);
-      }
-      // sellIn diminue chaque jour pour tout le monde sauf Sulfuras
-      if (item.name != "Sulfuras, Hand of Ragnaros") {
-        item.sellIn = item.sellIn - 1;
-      }
-
-      // une fois périmé (sellIn < 0), règles spéciales de dégradation
-      if (item.sellIn < 0) {
-        switch (item.name) {
-          case "Aged Brie":
-            // Aged Brie périmé : continue d'augmenter encore de 1 (donc +2 au total ce jour-là)
-            this.increaseQuality(item);
-            break;
-
-          case "Backstage passes to a TAFKAL80ETC concert":
-            // Backstage passes périmé : le concert est passé, quality tombe à 0
-            item.quality = 0;
-            break;
-
-          case "Sulfuras, Hand of Ragnaros":
-            // ne change jamais
-            break;
-
-          default:
-            // objet normal périmé : quality baisse encore de 1 (donc -2 au total ce jour-là)
-            this.decreaseQuality(item);
-        }
+          item.sellIn = item.sellIn - 1;
+          if (item.sellIn < 0) {
+            this.decreaseQuality(item); // périmé : baisse encore
+          }
       }
     }
 
