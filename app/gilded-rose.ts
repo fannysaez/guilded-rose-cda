@@ -66,19 +66,24 @@ export class GildedRose {
 
       // une fois périmé (sellIn < 0), règles spéciales de dégradation
       if (item.sellIn < 0) {
-        if (item.name != "Aged Brie") {
-          if (item.name != "Backstage passes to a TAFKAL80ETC concert") {
-            // objet normal périmé : quality baisse encore de 1 (donc -2 au total ce jour-là)
-            if (item.name != "Sulfuras, Hand of Ragnaros") {
-              this.decreaseQuality(item);
-            }
-          } else {
+        switch (item.name) {
+          case "Aged Brie":
+            // Aged Brie périmé : continue d'augmenter encore de 1 (donc +2 au total ce jour-là)
+            this.increaseQuality(item);
+            break;
+
+          case "Backstage passes to a TAFKAL80ETC concert":
             // Backstage passes périmé : le concert est passé, quality tombe à 0
             item.quality = 0;
-          }
-        } else {
-          // Aged Brie périmé : continue d'augmenter encore de 1 (donc +2 au total ce jour-là)
-          this.increaseQuality(item);
+            break;
+
+          case "Sulfuras, Hand of Ragnaros":
+            // ne change jamais
+            break;
+
+          default:
+            // objet normal périmé : quality baisse encore de 1 (donc -2 au total ce jour-là)
+            this.decreaseQuality(item);
         }
       }
     }
