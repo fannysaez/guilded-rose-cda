@@ -43,3 +43,37 @@
     });
 
   });
+
+    describe('Backstage passes', () => { // tests sur les places de concert, paliers de quality
+
+    it('augmente de 1 quand il reste plus de 10 jours', () => {
+      const gildedRose = new GildedRose([
+        new Item('Backstage passes to a TAFKAL80ETC concert', 15, 20), // sellIn=15, quality=20
+      ]);
+      const items = gildedRose.updateQuality(); // simule 1 jour
+
+      expect(items[0].sellIn).toBe(14); // sellIn baisse normalement
+      expect(items[0].quality).toBe(21); // quality augmente de 1
+    });
+
+    it('augmente de 2 quand il reste 10 jours ou moins', () => {
+      const gildedRose = new GildedRose([
+        new Item('Backstage passes to a TAFKAL80ETC concert', 10, 20), // pile à la limite des 10 jours
+      ]);
+      const items = gildedRose.updateQuality(); // simule 1 jour
+
+      expect(items[0].sellIn).toBe(9);
+      expect(items[0].quality).toBe(22); // +2 au lieu de +1
+    });
+
+    it('augmente de 3 quand il reste 5 jours ou moins', () => {
+      const gildedRose = new GildedRose([
+        new Item('Backstage passes to a TAFKAL80ETC concert', 5, 20), // pile à la limite des 5 jours
+      ]);
+      const items = gildedRose.updateQuality(); // simule 1 jour
+
+      expect(items[0].sellIn).toBe(4);
+      expect(items[0].quality).toBe(23); // +3 au lieu de +1
+    });
+
+  });
