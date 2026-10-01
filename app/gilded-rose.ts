@@ -35,29 +35,30 @@ export class GildedRose {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i]; // raccourci : évite de répéter this.items[i] partout
 
-      // objet normal (ni Aged Brie, ni Backstage passes)
-      if (
-        item.name != "Aged Brie" &&
-        item.name != "Backstage passes to a TAFKAL80ETC concert"
-      ) {
-        if (item.name != "Sulfuras, Hand of Ragnaros") {
-          this.decreaseQuality(item); // ↓ quality (Sulfuras ne bouge jamais)
-        }
-      } else {
-        // Aged Brie ou Backstage passes : la quality augmente
-        this.increaseQuality(item); // +1 de base pour les deux
+      // évolution de la quality selon le type d'objet
+      switch (item.name) {
+        case "Aged Brie":
+          this.increaseQuality(item);
+          break;
 
-        if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-          // Backstage passes : bonus selon le nombre de jours restants
+        case "Backstage passes to a TAFKAL80ETC concert":
+          this.increaseQuality(item); // +1 de base
           if (item.sellIn < 11) {
             this.increaseQuality(item); // +1 de plus si ≤10 jours (donc +2 au total)
           }
           if (item.sellIn < 6) {
             this.increaseQuality(item); // +1 de plus si ≤5 jours (donc +3 au total)
           }
-        }
-      }
+          break;
 
+        case "Sulfuras, Hand of Ragnaros":
+          // ne change jamais
+          break;
+
+        default:
+          // objet normal
+          this.decreaseQuality(item);
+      }
       // sellIn diminue chaque jour pour tout le monde sauf Sulfuras
       if (item.name != "Sulfuras, Hand of Ragnaros") {
         item.sellIn = item.sellIn - 1;
