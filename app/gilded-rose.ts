@@ -45,19 +45,13 @@ export class GildedRose {
         // Aged Brie ou Backstage passes : la quality augmente
         this.increaseQuality(this.items[i]); // +1 de base pour les deux
 
-        if (
-          this.items[i].name == "Backstage passes to a TAFKAL80ETC concert"
-        ) {
+        if (this.items[i].name == "Backstage passes to a TAFKAL80ETC concert") {
           // Backstage passes : bonus selon le nombre de jours restants
           if (this.items[i].sellIn < 11) {
-            if (this.items[i].quality < 50) {
-              this.items[i].quality = this.items[i].quality + 1; // +1 de plus si ≤10 jours (donc +2 au total)
-            }
+            this.increaseQuality(this.items[i]); // +1 de plus si ≤10 jours (donc +2 au total)
           }
           if (this.items[i].sellIn < 6) {
-            if (this.items[i].quality < 50) {
-              this.items[i].quality = this.items[i].quality + 1; // +1 de plus si ≤5 jours (donc +3 au total)
-            }
+            this.increaseQuality(this.items[i]); // +1 de plus si ≤5 jours (donc +3 au total)
           }
         }
       }
