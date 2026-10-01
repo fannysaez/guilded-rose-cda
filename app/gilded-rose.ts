@@ -8,6 +8,18 @@ export class Item {
     this.sellIn = sellIn;
     this.quality = quality;
   }
+
+    private increaseQuality(item: Item): void { // augmente la quality de 1, sans jamais dépasser 50
+    if (item.quality < 50) {
+      item.quality = item.quality + 1;
+    }
+  }
+
+  private decreaseQuality(item: Item): void { // diminue la quality de 1, sans jamais descendre sous 0
+    if (item.quality > 0) {
+      item.quality = item.quality - 1;
+    }
+  }
 }
 
 export class GildedRose {
