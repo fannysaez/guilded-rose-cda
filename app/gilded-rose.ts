@@ -62,6 +62,12 @@ export class GildedRose {
           // ne change jamais, sellIn ne bouge pas non plus
           break;
 
+        case "Conjured Mana Cake":
+          this.decreaseQuality(item);
+          this.decreaseQuality(item); // 2x plus vite qu'un objet normal
+          item.sellIn = item.sellIn - 1;
+          break;
+
         default:
           // objet normal
           this.decreaseQuality(item);
