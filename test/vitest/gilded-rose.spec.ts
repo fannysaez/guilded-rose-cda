@@ -114,4 +114,12 @@ describe('Conjured Mana Cake', () => {
     expect(items[0].sellIn).toBe(2); // sellIn baisse normalement
     expect(items[0].quality).toBe(4); // quality baisse de 2 (et non 1)
   });
+
+    it('perd 4 de quality par jour une fois périmé (2x la dégradation normale post-péremption)', () => {
+    const gildedRose = new GildedRose([new Item('Conjured Mana Cake', 0, 10)]); // sellIn=0, quality=10
+    const items = gildedRose.updateQuality(); // sellIn passe à -1 (périmé)
+
+    expect(items[0].sellIn).toBe(-1);
+    expect(items[0].quality).toBe(6); // -4 au lieu de -2
+  });
 });
