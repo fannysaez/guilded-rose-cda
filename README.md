@@ -22,6 +22,8 @@ npm run test:vitest
 npm run test:approvals
 ```
 
+---
+
 ## Credits
 
 Code from : https://github.com/emilybache/GildedRose-Refactoring-Kata
